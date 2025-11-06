@@ -1,135 +1,180 @@
-let buttonStart = document.querySelector("#start");
-let gameContainer = document.querySelector("#gameContainer");
-let userPropose = document.querySelector("#userPropose");
-let msgError = document.querySelector("#error");
-let msgWin = document.querySelector("#winner");
-let msgLost = document.querySelector("#lost");
-let displayWord = document.querySelector("#wordDisplay");
-
-let wordToFind = "aujourd'hui";
-let hiddenWord = [];
-let letterchoice = [];
-let cpt = 0;
-
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
+// 🎮 === VARIABLES PRINCIPALES ===
+let buttonStart = document.querySelector("#start");          // Bouton "Démarrer"
+let buttonRestart = document.querySelector("#restart");      // Bouton "Rejouer"
+let gameContainer = document.querySelector("#gameContainer");// Conteneur du jeu
+let userPropose = document.querySelector("#userPropose");    // Champ de saisie de la lettre
+let msgError = document.querySelector("#error");             // Message d’erreur
+let msgWin = document.querySelector("#winner");              // Message de victoire
+let msgLost = document.querySelector("#lost");               // Message de défaite
+let displayWord = document.querySelector("#wordDisplay");    // Zone d’affichage du mot
 
 
-buttonStart.addEventListener("click", function () {
-  gameContainer.style.display = "block";
-  buttonStart.style.display = "none";
-  hideWord(wordToFind);
-});
+// 🧠 === VARIABLES DE JEU ===
+let words = ["gandalf", "aragorn", "javascript", "dofus", "pikachu", "warcraft",];
+let wordToFind = "";     // Mot à deviner
+let hiddenWord = [];     // Mot caché sous forme de "_"
+let letterchoice = [];   // Lettres déjà proposées
+let cpt = 0;             // Compteur d’erreurs
 
 
-document.querySelector("#ajout").addEventListener("click", function () {
-  findWord();
-});
+// 🕵️‍♀️ === FONCTIONS PRINCIPALES ===
 
-
-function hideWord(word) {//fonction qui affiche l"espaces pour le mot a trouver
-  displayWord.textContent = ""; 
-  hiddenWord = [];
-  for (let i = 0; i < word.length; i++) {
-    if (word[i] === "'" || word[i] === "-") {
-      hiddenWord.push(word[i]);
-    } else {
-      hiddenWord.push("_");
+// Fonction 1 : Afficher les "_" à la place des lettres du mot
+function hideWord(word) {
+    displayWord.textContent = "";
+    hiddenWord = [];
+    for (let i = 0; i < word.length; i++) {
+        if (word[i] === "'" || word[i] === "-" || word[i] === " ") {
+            hiddenWord.push(word[i]); // Affiche les caractères spéciaux
+        } else {
+            hiddenWord.push("_"); // Cache les lettres
+        }
     }
-  }
-  displayWord.textContent = hiddenWord.join(" ");
+    displayWord.textContent = hiddenWord.join(" ");
 }
 
 
+// Fonction 2️ : Vérifie la lettre proposée par le joueur
 function findWord() {
-  const guess = userPropose.value.toLowerCase();
-
-  // Si la lettre a déjà été proposée
-  if (letterchoice.includes(guess)) {
-    msgError.textContent = "Vous avez déjà proposé cette lettre !";
-    return;
-  }
-  msgError.textContent = "";
-  msgWin.textContent = "";
-  msgLost.textContent = "";
-
-  let found = false;
-  for (let i = 0; i < wordToFind.length; i++) {
-    if (wordToFind[i].toLowerCase() === guess) {
-      hiddenWord[i] = wordToFind[i];
-      found = true;
+    // 🧱 Empêche de jouer si la partie est terminée
+    if (msgWin.textContent.includes("Bravo") || msgLost.textContent.includes("Perdu")) {
+        msgError.textContent = "La partie est terminée ! Cliquez sur 'Rejouer'.";
+        return;
     }
-  }
+    const guess = userPropose.value.toLowerCase().trim();
+    // Vérifie si le champ est vide
+    if (guess === "") {
+        msgError.textContent = "Veuillez entrer une lettre avant de valider !";
+        return;
+    }
+    // Vérifie si la lettre a déjà été utilisée
+    if (letterchoice.includes(guess)) {
+        msgError.textContent = "Vous avez déjà proposé cette lettre !";
+        return;
+    }
+    // Réinitialisation des messages
+    msgError.textContent = "";
+    msgWin.textContent = "";
+    msgLost.textContent = "";
 
-  displayWord.textContent = hiddenWord.join(" ");
+    let found = false;
 
-  if (found) {
-    msgWin.textContent = "Bien joué !";
-  } else {
-    cpt++;
-    draw(cpt);
-    msgLost.textContent = "Raté !";
-  }
+    // Parcours du mot pour vérifier la lettre
+    for (let i = 0; i < wordToFind.length; i++) {
+        if (wordToFind[i].toLowerCase() === guess) {
+            hiddenWord[i] = wordToFind[i];
+            found = true;
+        }
+    }
 
-  // On ajoute la lettre dans la liste des tentatives
-  letterchoice.push(guess);
-
-  // Affiche les lettres déjà proposées
-  document.querySelector("#lettersUsed").textContent = letterchoice.join(", ");
-
-  if (!hiddenWord.includes("_")) {
-    msgWin.textContent = "Bravo ! Vous avez trouvé le mot !";
-  }
-
-  if (cpt >= wordToFind.length) {
-    msgLost.textContent = `Perdu ! Le mot était "${wordToFind}"`;
-  }
-  userPropose.value = "";
+    // Mise à jour de l'affichage du mot
+    displayWord.textContent = hiddenWord.join(" ");
+    // Vérifie si la lettre est correcte ou non
+    if (found) {
+        msgWin.textContent = "Bien joué !";
+    } else {
+        cpt++;
+        draw(cpt); // Dessine une nouvelle partie du pendu
+        msgLost.textContent = "Raté !";
+    }
+    // Ajoute la lettre à la liste des propositions
+    letterchoice.push(guess);
+    document.querySelector("#lettersUsed").textContent = letterchoice.join(", ");
+    // 🏆 Vérifie la victoire
+    if (!hiddenWord.includes("_")) {
+        msgWin.textContent = "Bravo ! Vous avez trouvé le mot !";
+        buttonRestart.style.display = "block";
+    }
+    // 💀 Vérifie la défaite (trop d’erreurs)
+    if (cpt >= 8) {
+        msgLost.textContent = `Perdu ! Le mot était "${wordToFind}"`;
+        buttonRestart.style.display = "block";
+    }
+    // Vide le champ de saisie
+    userPropose.value = "";
 }
 
-function draw(cpt) {//function draw le pendu
-  switch (cpt) {
-    case 1:
-      ctx.beginPath();
-      ctx.moveTo(50, 150);
-      ctx.lineTo(100, 150);
-      ctx.stroke();
-      break;
-    case 2:
-      ctx.moveTo(75, 150);
-      ctx.lineTo(75, 0);
-      ctx.stroke();
-      break;
-    case 3:
-      ctx.lineTo(150, 0);
-      ctx.lineTo(150, 10);
-      ctx.arc(150, 25, 10, 0, Math.PI * 2);
-      ctx.stroke();
-      break;
-    case 4:
-      ctx.moveTo(150, 35);
-      ctx.lineTo(150, 70);
-      ctx.stroke();
-      break;
-    case 5:
-      ctx.moveTo(150, 50);
-      ctx.lineTo(130, 60);
-      ctx.stroke();
-      break;
-    case 6:
-      ctx.moveTo(150, 50);
-      ctx.lineTo(170, 60);
-      ctx.stroke();
-      break;
-    case 7:
-      ctx.moveTo(150, 70);
-      ctx.lineTo(130, 90);
-      ctx.stroke();
-      break;
-    case 8:
-      ctx.moveTo(150, 70);
-      ctx.lineTo(170, 90);
-      ctx.stroke();
-      break;
-  }
+// Fonction 3️⃣ : Dessine le pendu étape par étape sur le canvas
+let canvas = document.querySelector("canvas");
+let ctx = canvas.getContext("2d");
+function draw(cpt) {
+    switch (cpt) {
+        case 1: // Base
+            ctx.beginPath();
+            ctx.moveTo(50, 150);
+            ctx.lineTo(100, 150);
+            ctx.stroke();
+            break;
+        case 2: // Poteau vertical
+            ctx.beginPath();
+            ctx.moveTo(75, 150);
+            ctx.lineTo(75, 0);
+            ctx.stroke();
+            break;
+        case 3: // Barre horizontale + tête
+            ctx.beginPath();
+            ctx.moveTo(75, 0);
+            ctx.lineTo(150, 0);
+            ctx.lineTo(150, 10);
+            ctx.arc(150, 25, 10, 0, Math.PI * 2);
+            ctx.stroke();
+            break;
+        case 4: // Corps
+            ctx.beginPath();
+            ctx.moveTo(150, 35);
+            ctx.lineTo(150, 70);
+            ctx.stroke();
+            break;
+        case 5: // Bras gauche
+            ctx.beginPath();
+            ctx.moveTo(150, 50);
+            ctx.lineTo(130, 60);
+            ctx.stroke();
+            break;
+        case 6: // Bras droit
+            ctx.beginPath();
+            ctx.moveTo(150, 50);
+            ctx.lineTo(170, 60);
+            ctx.stroke();
+            break;
+        case 7: // Jambe gauche
+            ctx.beginPath();
+            ctx.moveTo(150, 70);
+            ctx.lineTo(130, 90);
+            ctx.stroke();
+            break;
+        case 8: // Jambe droite
+            ctx.beginPath();
+            ctx.moveTo(150, 70);
+            ctx.lineTo(170, 90);
+            ctx.stroke();
+            break;
+    }
 }
+// Démarrage du jeu
+buttonStart.addEventListener("click" , function () {
+    gameContainer.style.display = "block";     // Affiche le conteneur du jeu
+    buttonStart.style.display = "none";        // Cache le bouton "Démarrer"
+
+    // Sélectionne un mot aléatoire et le masque
+    wordToFind = words[Math.floor(Math.random() * words.length)];
+    hideWord(wordToFind);
+});
+
+// Validation d’une lettre
+document.querySelector("#ajout").addEventListener("click", function () {
+    findWord();
+});
+// Validation avec la touche "Entrée"
+userPropose.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        findWord();
+    }
+});
+
+// Redémarrage du jeu
+buttonRestart.addEventListener("click", function () {
+    location.reload(); // Recharge la page
+
+});
+

@@ -4,6 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/style.css">
     <title>le Pendu</title>
 </head>
@@ -15,27 +24,27 @@
     </header>
 
 
-    <section>
-        <div id="gameContainer">
-            <h2>Essayez de deviner le mot en proposant des lettres une par une.</h2>
-            <div id="wordDisplay"></div>
-            <br>
-            <div id="game">
-                <label for="userPropose">lettres:</label>
-                <input id="userPropose" type="text" maxlength="1">
-                <button id="ajout">ajoutez</button>
-                
-            </div>
-            <canvas></canvas>
-            <p id="error"></p>
-            <article id="resultContainer">
-                <p id="winner"></p>
-                <p id="lost"></p>
-                <p>Lettres déjà proposées : <span id="lettersUsed"></span></p>
 
-            </article>
+    <div id="gameContainer">
+        <h2>Essayez de deviner le mot en proposant des lettres une par une.</h2>
+        <div id="wordDisplay"></div>
+        <br>
+        <div id="game">
+            <label for="userPropose">lettres:</label>
+            <input id="userPropose" type="text" maxlength="1">
+            <button id="ajout">ajoutez</button>
+
         </div>
-    </section>
+        <canvas></canvas>
+        <p id="error"></p>
+        <article id="resultContainer">
+            <p id="winner"></p>
+            <p id="lost"></p>
+            <p>Lettres déjà proposées : <span id="lettersUsed"></span></p>
+            <button type="button" id="restart">Restart</button>
+        </article>
+    </div>
+
 
     <footer>
 
