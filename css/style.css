@@ -1,0 +1,29 @@
+body {
+  background-image: url(/img/palais-tokyo.jfif);
+  background-size: cover;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+h2 {
+  font-size: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+}
+
+#gameContainer {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+}

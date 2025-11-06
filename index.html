@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>le Pendu</title>
+</head>
+
+<body>
+    <header>
+        <h1>Bienvenue au jeu du Pendu</h1>
+    </header>
+
+
+    <section>
+        <div id="gameContainer">
+            <h2>Essayez de deviner le mot en proposant des lettres une par une.</h2>
+            <div id="game">
+                <label for="userPropose">lettres:</label>
+                <input id="userPropose" type="text">
+                <button id="ajout">ajoutez</button>
+               
+                <canvas></canvas>
+            </div>
+            <p id="error"></p>
+            <article id="resultContainer">
+                <p id="winner"></p>
+
+            </article>
+        </div>
+    </section>
+
+    <footer>
+
+    </footer>
+
+    <script src="script/main.js"></script>
+</body>
+
+</html>
