@@ -1,12 +1,25 @@
 body {
   background-image: url(/img/palais-tokyo.jfif);
   background-size: cover;
+  
+  background-attachment: fixed;
 }
 
 header {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  text-align: center;
   color: white;
+}
+
+#start {
+  display: block;
+  margin: 5% 45%;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 25px;
+  box-shadow: 0px 0px 5px 5px rgb(0, 0, 0)
 }
 
 h2 {
@@ -19,7 +32,18 @@ h2 {
   text-align: center;
 }
 
+#wordDisplay {
+  font-size: 30px;
+  letter-spacing: 10px;
+  margin-top: 20px;
+}
+
+#userPropose {
+  width: 10px;
+}
+
 #gameContainer {
+  display: none;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
   border-radius: 10px;

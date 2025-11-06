@@ -11,23 +11,26 @@
 <body>
     <header>
         <h1>Bienvenue au jeu du Pendu</h1>
+        <button type="button" id="start">Start</button>
     </header>
 
 
     <section>
         <div id="gameContainer">
             <h2>Essayez de deviner le mot en proposant des lettres une par une.</h2>
+            <div id="wordDisplay"></div>
+            <br>
             <div id="game">
                 <label for="userPropose">lettres:</label>
-                <input id="userPropose" type="text">
+                <input id="userPropose" type="text" maxlength="1">
                 <button id="ajout">ajoutez</button>
-               
-                <canvas></canvas>
+                
             </div>
+            <canvas></canvas>
             <p id="error"></p>
             <article id="resultContainer">
                 <p id="winner"></p>
-
+                <p id="lost"></p>
             </article>
         </div>
     </section>

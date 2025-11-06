@@ -1,3 +1,4 @@
+let buttonStart = document.querySelector("#start")
 let gameContainer = document.querySelector("#gameContainer");
 let game = document.querySelector("#game");
 let result = document.querySelector("#resultContainer");
@@ -5,16 +6,41 @@ let btn = document.querySelector("#ajout")
 let userPropose = document.querySelector("#userPropose");
 let msgError = document.querySelector("#error")
 let msgWin = document.querySelector("#winner")
-let wordToFind = "javascript";
+let msgLost = document.querySelector("#lost")
+let displayWord = document.querySelector("#wordDisplay")
+let wordToFind = "aujourd'hui";
+let hiddenWord = "";
 let cpt = 0;
+
+document.getElementById("start").addEventListener("click", function () {
+    gameContainer.style.display = "block";
+    buttonStart.style.display = "none";
+});
 
 document.getElementById("ajout").addEventListener("click", function () {
     findWord();
 });
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-function draw(cpt) {
 
+function hideWord(word) {
+    let underscore = 0;
+    for (let i = 0; i < wordToFind.length; i++) {
+        underscore = document.createElement("p")
+        if (word[i] == "'" || word[i] == "-") {
+            underscore.textContent = word[i];
+            displayWord.appendChild(underscore);
+
+        } else {
+            hiddenWord += "_";
+            displayWord.appendChild(underscore);
+        }
+    }
+    displayWord.textContent = hiddenWord;
+}
+hideWord(wordToFind);
+
+function draw(cpt) {
     switch (cpt) {
         case 1:
             ctx.beginPath();
@@ -70,27 +96,19 @@ function draw(cpt) {
 
 function findWord() {
     if (userPropose.value != "") {
-        let newDiv = document.createElement("div");
-        let letter = document.createElement("p");
-
+        let answerLetter = 0
         msgError.textContent = ""
         msgWin.textContent = ""
-
-        result.appendChild(newDiv);
-        newDiv.appendChild(letter);
-        // letter.textContent = userPropose.value;
+        msgLost.textContent = ""
         for (let i = 0; i < wordToFind.length; i++) {
-            if (userPropose.value == wordToFind[i]) {
-                letter.textContent = userPropose.value;
-                msgWin.textContent = "Gagné !"
-
-            } else if (userPropose.value != wordToFind[i]) {
-                letter.textContent = userPropose.value + "_";
-                cpt++;
-                draw(cpt);
+            if (userPropose == wordToFind[i]) {
+                answerLetter = document.querySelector(`#wordDisplay p:nth-child(${i + 1})`)
+                msgWin.textContent = "bien joué !"
+            } else if (wordToFind[i] != userPropose) {
+                letterfalse.textContent = userPropose.value
+                msgLost.textContent = "raté !"
             }
         }
-
     } else {
         msgError.textContent = "Veuillez entrer une lettre"
     }
