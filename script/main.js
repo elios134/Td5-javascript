@@ -85,11 +85,14 @@ function findWord() {
     letterchoice.push(guess);
     document.querySelector("#lettersUsed").textContent = letterchoice.join(", ");
     //  Vérifie la victoire
-    if (!hiddenWord.includes("_")) {
+    if (hiddenWord.includes("_")) {
+        msgWin.textContent = "Continue, tu y es presque !"
+    } else {
         msgWin.textContent = "Bravo ! Vous avez trouvé le mot !";
         buttonRestart.style.display = "block";
     }
-    // Vérifie la défaite (trop d’erreurs)
+
+    // Compteur d'erreur selon les case 
     if (cpt >= 8) {
         msgLost.textContent = `Perdu ! Le mot était "${wordToFind}"`;
         buttonRestart.style.display = "block";
