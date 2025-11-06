@@ -6,7 +6,8 @@ let userPropose = document.querySelector("#userPropose");    // Champ de saisie 
 let msgError = document.querySelector("#error");             // Message d’erreur
 let msgWin = document.querySelector("#winner");              // Message de victoire
 let msgLost = document.querySelector("#lost");               // Message de défaite
-let displayWord = document.querySelector("#wordDisplay");    // Zone d’affichage du mot
+let displayWord = document.querySelector("#wordDisplay");
+let mainAudio = document.querySelector("#mainAudio")  // Zone d’affichage du mot
 
 
 // 🧠 === VARIABLES DE JEU ===
@@ -152,10 +153,11 @@ function draw(cpt) {
     }
 }
 // Démarrage du jeu
-buttonStart.addEventListener("click" , function () {
+buttonStart.addEventListener("click", function () {
     gameContainer.style.display = "block";     // Affiche le conteneur du jeu
     buttonStart.style.display = "none";        // Cache le bouton "Démarrer"
-
+    mainAudio.play()
+    mainAudio.loop = true
     // Sélectionne un mot aléatoire et le masque
     wordToFind = words[Math.floor(Math.random() * words.length)];
     hideWord(wordToFind);
