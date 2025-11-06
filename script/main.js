@@ -12,7 +12,7 @@ let audioCorrect = document.querySelector("#audioCorrect")   // Audio si lettre 
 let audioError = document.querySelector("#audioerror")       // Audio si lettre pas dans le mot
 
 
-// 🧠 === VARIABLES DE JEU ===
+//  === VARIABLES DE JEU ===
 let words = ["gandalf", "aragorn", "javascript", "dofus", "pikachu", "warcraft",];
 let wordToFind = "";     // Mot à deviner
 let hiddenWord = [];     // Mot caché sous forme de "_"
@@ -20,8 +20,7 @@ let letterchoice = [];   // Lettres déjà proposées
 let cpt = 0;             // Compteur d’erreurs
 
 
-// 🕵️‍♀️ === FONCTIONS PRINCIPALES ===
-
+//  === FONCTIONS PRINCIPALES ===
 // Fonction 1 : Afficher les "_" à la place des lettres du mot
 function hideWord(word) {
     displayWord.textContent = "";
@@ -39,7 +38,7 @@ function hideWord(word) {
 
 // Fonction 2️ : Vérifie la lettre proposée par le joueur
 function findWord() {
-    // 🧱 Empêche de jouer si la partie est terminée
+    //  Empêche de jouer si la partie est terminée
     if (msgWin.textContent.includes("Bravo") || msgLost.textContent.includes("Perdu")) {
         msgError.textContent = "La partie est terminée ! Cliquez sur 'Rejouer'.";
         return;
@@ -85,12 +84,12 @@ function findWord() {
     // Ajoute la lettre à la liste des propositions
     letterchoice.push(guess);
     document.querySelector("#lettersUsed").textContent = letterchoice.join(", ");
-    // 🏆 Vérifie la victoire
+    //  Vérifie la victoire
     if (!hiddenWord.includes("_")) {
         msgWin.textContent = "Bravo ! Vous avez trouvé le mot !";
         buttonRestart.style.display = "block";
     }
-    // 💀 Vérifie la défaite (trop d’erreurs)
+    // Vérifie la défaite (trop d’erreurs)
     if (cpt >= 8) {
         msgLost.textContent = `Perdu ! Le mot était "${wordToFind}"`;
         buttonRestart.style.display = "block";
@@ -99,7 +98,7 @@ function findWord() {
     userPropose.value = "";
 }
 
-// Fonction 3️⃣ : Dessine le pendu étape par étape sur le canvas
+// Fonction 3️ : Dessine le pendu étape par étape sur le canvas
 let canvas = document.querySelector("canvas");
 let ctx = canvas.getContext("2d");
 function draw(cpt) {
