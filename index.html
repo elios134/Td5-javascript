@@ -21,7 +21,7 @@
     <header>
         <h1>Bienvenue au jeu du Pendu</h1>
         <button type="button" id="start">Start</button>
-        <audio id="mainAudio" src="/img/with-friends-again-fantasy-instrumental-172580.mp3"></audio>
+
     </header>
 
 
@@ -36,6 +36,7 @@
             <button id="ajout">ajoutez</button>
 
         </div>
+        <br>
         <canvas></canvas>
         <p id="error"></p>
         <article id="resultContainer">
@@ -48,7 +49,9 @@
 
 
     <footer>
-
+        <audio id="audioerror" src="/img/error-126627.mp3"></audio>
+        <audio id="audioCorrect" src="/img/correct-83487.mp3"></audio>
+        <audio id="mainAudio" controls src="/img/with-friends-again-fantasy-instrumental-172580.mp3"></audio>
     </footer>
 
     <script src="script/main.js"></script>

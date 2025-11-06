@@ -6,8 +6,10 @@ let userPropose = document.querySelector("#userPropose");    // Champ de saisie 
 let msgError = document.querySelector("#error");             // Message d’erreur
 let msgWin = document.querySelector("#winner");              // Message de victoire
 let msgLost = document.querySelector("#lost");               // Message de défaite
-let displayWord = document.querySelector("#wordDisplay");
-let mainAudio = document.querySelector("#mainAudio")  // Zone d’affichage du mot
+let displayWord = document.querySelector("#wordDisplay");    // Zone d’affichage du mot
+let mainAudio = document.querySelector("#mainAudio")         // Theme audio au lancement du jeu
+let audioCorrect = document.querySelector("#audioCorrect")   // Audio si lettre est dans le mot
+let audioError = document.querySelector("#audioerror")       // Audio si lettre pas dans le mot
 
 
 // 🧠 === VARIABLES DE JEU ===
@@ -73,10 +75,12 @@ function findWord() {
     // Vérifie si la lettre est correcte ou non
     if (found) {
         msgWin.textContent = "Bien joué !";
+        audioCorrect.cloneNode().play()
     } else {
         cpt++;
         draw(cpt); // Dessine une nouvelle partie du pendu
         msgLost.textContent = "Raté !";
+        audioError.cloneNode().play()
     }
     // Ajoute la lettre à la liste des propositions
     letterchoice.push(guess);

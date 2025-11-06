@@ -54,3 +54,7 @@ header {
   text-align: center;
   font-family: "Lexend";
 }
+footer.audio{
+  display: flex;
+  justify-content: center;
+}
